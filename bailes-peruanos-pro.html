@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <title>Sask Perú — Folklore Peruano en Saskatchewan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,400&family=DM+Sans:wght@400;600&family=Bebas+Neue&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,400&family=DM+Sans:wght@400;600&family=Bebas+Neue&display=swap" rel="stylesheet"></noscript>
+    <style>
+        :root {
+            --magenta:       #D81B6B;
+            --magenta-suave: #F4B8C8;
+            --rojo:          #C41230;
+            --rojo-oscuro:   #8B0D22;
+            --dorado:        #C8A951;
+            --dorado-claro:  #E8D48A;
+            --crema:         #F8F0E8;
+            --negro:         #0A0A0A;
+            --navy:          #1A1A3A;
+            --gris-oscuro:   #1A1A1A;
+            --blanco:        #FFFFFF;
+            --texto-suave:   rgba(255,255,255,0.75);
+            --amber:         #E8741A;
+            --verde:         #2D6A4F;
+            --coral:         #E8614A;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--negro);
+            color: var(--blanco);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ===== CURSOR CUSTOM ===== */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: var(--dorado);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+        .cursor-ring {
+            width: 40px; height: 40px;
+            border: 1.5px solid rgba(212,168,67,0.6);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 28px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+        nav.scrolled {
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            padding: 18px 80px;
+            border-bottom: 1px solid rgba(212,168,67,0.15);
+        }
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--magenta), #FF6BA8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 50px; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.75);
+            font-size: 14px; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: var(--magenta);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--magenta); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-btn {
+            border: 1px solid var(--magenta);
+            color: var(--magenta); background: transparent;
+            padding: 12px 30px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .nav-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--magenta);
+            transform: translateX(-101%);
+            transition: transform 0.3s ease; z-index: -1;
+        }
+        .nav-btn:hover { color: var(--blanco); }
+        .nav-btn:hover::before { transform: translateX(0); }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; position: relative;
+            display: grid; grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+        .hero-left {
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column;
+            justify-content: center;
+            padding: 160px 80px 100px;
+            background: linear-gradient(105deg, var(--negro) 60%, transparent 100%);
+        }
+        .hero-eyebrow {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 40px;
+            opacity: 0; animation: fadeUp 0.8s 0.3s ease forwards;
+        }
+        .eyebrow-line { width: 50px; height: 1px; background: var(--dorado); }
+        .eyebrow-text {
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--magenta);
+        }
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(60px, 7vw, 100px);
+            font-weight: 300; line-height: 0.95;
+            letter-spacing: -2px; margin-bottom: 40px;
+            opacity: 0; animation: fadeUp 0.8s 0.5s ease forwards;
+        }
+        .hero h1 em { font-style: italic; color: var(--magenta); display: block; }
+        .hero h1 strong {
+            font-weight: 700;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-desc {
+            font-size: 17px; line-height: 1.75;
+            color: rgba(255,255,255,0.65);
+            max-width: 440px; margin-bottom: 55px;
+            opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+        }
+        .hero-actions {
+            display: flex; gap: 24px; align-items: center;
+            opacity: 0; animation: fadeUp 0.8s 0.9s ease forwards;
+        }
+        .btn-gold {
+            background: var(--magenta); color: var(--blanco);
+            padding: 18px 44px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .btn-gold::after {
+            content: ''; position: absolute; inset: 0;
+            background: #FF4D9A;
+            transform: translateX(-101%);
+            transition: transform 0.3s ease; z-index: 0;
+        }
+        .btn-gold span { position: relative; z-index: 1; }
+        .btn-gold:hover::after { transform: translateX(0); }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(216,27,107,0.4); }
+        .btn-text {
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 14px; font-weight: 500; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-text svg { transition: transform 0.3s; }
+        .btn-text:hover { color: var(--dorado); }
+        .btn-text:hover svg { transform: translateX(5px); }
+
+        .hero-right { position: relative; overflow: hidden; }
+        .hero-visual {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg,
+                #8B0D22 0%, #C41230 25%,
+                #D4A843 55%, #E85D04 75%,
+                #2D6A4F 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .hero-visual::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(196,18,48,0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(45,106,79,0.4) 0%, transparent 50%);
+        }
+        .hero-visual-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(80px, 12vw, 180px);
+            font-weight: 700;
+            color: rgba(255,255,255,0.06);
+            letter-spacing: -5px;
+            line-height: 0.85;
+            text-align: center;
+            position: relative; z-index: 1;
+            user-select: none;
+        }
+        .hero-visual-badge {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #C41230, #D4A843, #C41230);
+        }
+        .hero-right::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to right, var(--negro) 0%, transparent 35%),
+                        linear-gradient(to top, var(--negro) 0%, transparent 30%);
+            z-index: 1;
+        }
+        .hero-tag {
+            position: absolute; bottom: 60px; right: 60px; z-index: 2;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212,168,67,0.3);
+            padding: 24px 32px;
+            animation: fadeUp 1s 1.2s ease forwards; opacity: 0;
+        }
+        .hero-tag-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px; line-height: 1; color: var(--magenta);
+        }
+        .hero-tag-label {
+            font-size: 12px; letter-spacing: 2px;
+            text-transform: uppercase; color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+        .hero-flag-stripe {
+            position: absolute; top: 0; right: 0;
+            width: 6px; height: 100%;
+            background: linear-gradient(to bottom, #C41230 33%, #FFFFFF 33% 66%, #C41230 66%);
+            z-index: 3; opacity: 0.6;
+        }
+
+        /* ===== SCROLL TICKER ===== */
+        .ticker {
+            background: var(--rojo); padding: 18px 0;
+            overflow: hidden; white-space: nowrap;
+        }
+        .ticker-track {
+            display: inline-flex; gap: 0;
+            animation: ticker 30s linear infinite;
+        }
+        .ticker-item {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px; letter-spacing: 4px;
+            padding: 0 60px; color: var(--blanco);
+        }
+        .ticker-sep { color: var(--dorado-claro); padding: 0; }
+
+        /* ===== ABOUT STRIP ===== */
+        .about-strip {
+            padding: 120px 80px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 120px; align-items: center;
+        }
+        .section-tag { display: flex; align-items: center; gap: 14px; }
+        .section-tag span {
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--magenta);
+        }
+        .about-left .section-tag { margin-bottom: 28px; }
+        .about-left h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(40px, 4vw, 62px);
+            font-weight: 300; line-height: 1.1;
+            letter-spacing: -1px; margin-bottom: 30px;
+        }
+        .about-left h2 em { font-style: italic; color: var(--magenta); }
+        .about-left p {
+            color: rgba(255,255,255,0.6);
+            font-size: 17px; line-height: 1.8; margin-bottom: 20px;
+        }
+        .about-right {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+        }
+        .stat-box {
+            background: var(--gris-oscuro);
+            padding: 44px 36px; transition: background 0.3s;
+        }
+        .stat-box:hover { background: #222; }
+        .stat-box.accent { background: var(--rojo); }
+        .stat-box.accent:hover { background: #a01028; }
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px; font-weight: 700;
+            line-height: 1; color: var(--magenta);
+            display: block; margin-bottom: 10px;
+        }
+        .stat-box.accent .stat-num { color: var(--blanco); }
+        .stat-label {
+            font-size: 12px; letter-spacing: 2px;
+            text-transform: uppercase; color: rgba(255,255,255,0.5);
+        }
+
+        /* ===== DANCES SECTION ===== */
+        .dances-section { padding: 0 0 140px; }
+        .dances-header {
+            padding: 0 80px 80px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .dances-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(48px, 5.5vw, 80px);
+            font-weight: 300; line-height: 1; letter-spacing: -2px;
+        }
+        .dances-header h2 em { font-style: italic; color: var(--magenta); }
+        .dances-header p {
+            max-width: 360px; color: rgba(255,255,255,0.55);
+            font-size: 16px; line-height: 1.7;
+        }
+        .dances-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+        }
+        .dance-card {
+            position: relative; overflow: hidden;
+            aspect-ratio: 4/5; cursor: none;
+        }
+        .dance-bg {
+            width: 100%; height: 100%;
+            position: absolute; inset: 0;
+            transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        }
+        .dance-card:hover .dance-bg { transform: scale(1.06); }
+        .dance-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+            transition: opacity 0.4s ease;
+        }
+        .dance-card:hover .dance-overlay { opacity: 0.85; }
+        .dance-content {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 40px 36px; z-index: 2;
+        }
+        .dance-region {
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--magenta-suave); margin-bottom: 12px;
+            opacity: 0; transform: translateY(10px);
+            transition: all 0.4s 0.05s ease;
+        }
+        .dance-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 40px; font-weight: 600;
+            line-height: 1; letter-spacing: -1px; margin-bottom: 16px;
+        }
+        .dance-desc {
+            font-size: 14px; color: rgba(255,255,255,0.75);
+            line-height: 1.65; max-height: 0; overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease; opacity: 0;
+        }
+        .dance-card:hover .dance-region { opacity: 1; transform: translateY(0); }
+        .dance-card:hover .dance-desc { max-height: 100px; opacity: 1; }
+        .dance-number {
+            position: absolute; top: 30px; right: 30px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px; color: rgba(255,255,255,0.07); line-height: 1;
+            transition: color 0.4s;
+        }
+        .dance-card:hover .dance-number { color: rgba(212,168,67,0.18); }
+
+        .dance-feature {
+            grid-column: span 2; aspect-ratio: auto; height: 520px;
+        }
+        .dance-feature .dance-name { font-size: 64px; }
+
+        /* Gradient backgrounds per dance */
+        .bg-tinkus {
+            background: linear-gradient(135deg, #3D0A0A 0%, #8B1A1A 40%, #C41230 70%, #E85D04 100%);
+        }
+        .bg-huaylarsh {
+            background: linear-gradient(135deg, #3D2B00 0%, #8B6914 40%, #D4A843 70%, #7B9E3E 100%);
+        }
+        .bg-caporales {
+            background: linear-gradient(135deg, #050505 0%, #1A1A1A 40%, #4A0A0A 70%, #8B0D22 100%);
+        }
+        .bg-festejo {
+            background: linear-gradient(135deg, #4A1500 0%, #8B3300 40%, #E8741A 70%, #D4A843 100%);
+        }
+        .bg-amazonia {
+            background: linear-gradient(135deg, #001A0A 0%, #0D3B1E 40%, #1B5E20 70%, #2D6A4F 100%);
+        }
+        .bg-corazon {
+            background: linear-gradient(135deg, #C41230 0%, #E85D04 20%, #D4A843 40%, #7B9E3E 60%, #2D6A4F 80%, #4A90D9 100%);
+        }
+
+        /* Geometric decorative overlay for dance cards */
+        .dance-bg::after {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+        }
+
+        /* ===== EVENTS SECTION ===== */
+        .events-section {
+            background: var(--gris-oscuro);
+            padding: 120px 80px;
+        }
+        .events-header {
+            text-align: center; margin-bottom: 80px;
+        }
+        .events-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px; font-weight: 300; margin-top: 20px;
+        }
+        .events-header h2 em { font-style: italic; color: var(--dorado); }
+        .events-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+        }
+        .event-card {
+            background: var(--negro); padding: 56px 52px;
+            position: relative; overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .event-card:hover { transform: translateY(-4px); }
+        .event-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+        }
+        .event-card.primary::before { background: var(--rojo); }
+        .event-card.secondary::before { background: var(--dorado); }
+        .event-card.kids::before { background: var(--cielo-sk); }
+        .event-date {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px; letter-spacing: 4px;
+            color: var(--rojo); margin-bottom: 20px;
+        }
+        .event-card.secondary .event-date { color: var(--dorado); }
+        .event-card.kids .event-date { color: var(--cielo-sk); }
+        .event-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px; font-weight: 600; line-height: 1.1;
+            margin-bottom: 20px; letter-spacing: -1px;
+        }
+        .event-desc {
+            color: rgba(255,255,255,0.55); font-size: 15px;
+            line-height: 1.75; margin-bottom: 30px;
+        }
+        .event-detail {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; color: rgba(255,255,255,0.45);
+            letter-spacing: 1px; margin-bottom: 10px;
+        }
+        .event-detail svg { color: var(--dorado); flex-shrink: 0; }
+        .event-card.secondary .event-detail svg { color: var(--dorado); }
+        .event-card.kids .event-detail svg { color: var(--cielo-sk); }
+
+        /* ===== CLASSES SECTION ===== */
+        .classes-section { padding: 140px 80px; }
+        .classes-header {
+            display: flex; justify-content: space-between;
+            align-items: flex-end; margin-bottom: 80px;
+        }
+        .classes-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(44px, 5vw, 70px);
+            font-weight: 300; line-height: 1; letter-spacing: -2px;
+        }
+        .classes-header h2 em { font-style: italic; color: var(--rojo); }
+        .classes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+        .class-card {
+            background: var(--gris-oscuro); padding: 50px 44px;
+            position: relative; overflow: hidden;
+            transition: all 0.4s ease; border-bottom: 2px solid transparent;
+        }
+        .class-card:hover { border-bottom-color: var(--dorado); background: #1e1e1e; }
+        .class-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 1px; background: rgba(255,255,255,0.06);
+        }
+        .class-level {
+            font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--magenta); margin-bottom: 20px;
+        }
+        .class-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px; font-weight: 600;
+            margin-bottom: 16px; line-height: 1.1;
+        }
+        .class-desc {
+            color: rgba(255,255,255,0.55);
+            font-size: 15px; line-height: 1.7; margin-bottom: 36px;
+        }
+        .class-details { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .class-detail {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 14px; color: rgba(255,255,255,0.6);
+        }
+        .class-detail svg { color: var(--dorado); flex-shrink: 0; }
+        .class-cta {
+            display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 24px; font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: var(--magenta); text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+        .class-cta:hover { gap: 16px; }
+        .featured-class { background: var(--rojo); }
+        .featured-class:hover { background: var(--rojo-oscuro); border-bottom-color: var(--dorado); }
+        .featured-class .class-level { color: rgba(255,255,255,0.7); }
+        .featured-class .class-detail { color: rgba(255,255,255,0.8); }
+        .featured-class .class-detail svg { color: rgba(255,255,255,0.9); }
+        .badge-popular {
+            position: absolute; top: 30px; right: 30px;
+            background: var(--dorado); color: var(--negro);
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            position: relative; overflow: hidden;
+            min-height: 80vh; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .cta-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg,
+                #0A0A0A 0%, #1A0505 20%, #3D0A0A 40%,
+                #8B0D22 60%, #C41230 80%, #1A0505 100%);
+            filter: brightness(0.35);
+        }
+        .cta-bg-pattern {
+            position: absolute; inset: 0; z-index: 1;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(212,168,67,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(196,18,48,0.2) 0%, transparent 40%),
+                radial-gradient(circle at 60% 80%, rgba(45,106,79,0.1) 0%, transparent 40%);
+        }
+        .cta-content {
+            position: relative; z-index: 2;
+            text-align: center; padding: 80px;
+        }
+        .cta-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(52px, 7vw, 100px);
+            font-weight: 300; line-height: 1;
+            letter-spacing: -3px; margin-bottom: 30px;
+        }
+        .cta-content h2 em { font-style: italic; color: var(--magenta); }
+        .cta-content p {
+            font-size: 19px; color: rgba(255,255,255,0.65);
+            max-width: 580px; margin: 0 auto 60px; line-height: 1.75;
+        }
+        .cta-buttons {
+            display: flex; gap: 20px;
+            justify-content: center; align-items: center; flex-wrap: wrap;
+        }
+        .btn-whatsapp {
+            background: #25D366; color: #000;
+            padding: 18px 44px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            text-decoration: none; display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn-whatsapp:hover { background: #1ebe57; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.3); }
+
+        /* ===== FOOTER ===== */
+        footer { background: #050505; padding: 100px 80px 60px; }
+        .footer-top {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 80px; padding-bottom: 80px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-brand .logo-footer {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 40px; letter-spacing: 5px;
+            background: linear-gradient(135deg, var(--magenta), #FF6BA8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: block; margin-bottom: 24px;
+        }
+        .footer-brand p {
+            font-size: 15px; color: rgba(255,255,255,0.45);
+            line-height: 1.8; max-width: 300px; margin-bottom: 36px;
+        }
+        .footer-socials { display: flex; gap: 14px; }
+        .social-btn {
+            width: 42px; height: 42px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; color: rgba(255,255,255,0.5);
+            font-size: 14px; transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+        }
+        .social-btn:hover { border-color: var(--magenta); color: var(--magenta); background: rgba(216,27,107,0.08); }
+        .footer-col h4 {
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: rgba(255,255,255,0.3); margin-bottom: 28px;
+        }
+        .footer-col a {
+            display: block; color: rgba(255,255,255,0.55);
+            text-decoration: none; font-size: 15px;
+            margin-bottom: 14px; transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--magenta); }
+        .footer-bottom {
+            padding-top: 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            color: rgba(255,255,255,0.2); font-size: 13px;
+        }
+        .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+        .footer-bottom a:hover { color: var(--magenta); }
+        .footer-sk-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+            color: rgba(255,255,255,0.2); margin-top: 16px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ticker {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 2px; background: var(--dorado);
+            z-index: 10001; width: 0%; transition: width 0.1s;
+        }
+
+        .line-dec {
+            width: 50px; height: 1px; background: var(--magenta);
+            display: inline-block; vertical-align: middle; margin-right: 14px;
+        }
+
+        #particles {
+            position: absolute; inset: 0;
+            z-index: 0; pointer-events: none; opacity: 0.4;
+        }
+
+        /* ===== PERFORMANCE ===== */
+        .hero-visual { will-change: transform; contain: layout style; }
+        .dance-bg    { will-change: transform; }
+        .reveal      { will-change: opacity, transform; }
+        .ticker-track { will-change: transform; }
+        .cursor-dot, .cursor-ring { will-change: transform; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .ticker-track { animation: none; }
+            #particles { display: none; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            nav { padding: 20px 30px; }
+            nav.scrolled { padding: 14px 30px; }
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-left { padding: 120px 30px 60px; }
+            .hero-right { display: none; }
+            .about-strip { grid-template-columns: 1fr; padding: 80px 30px; gap: 60px; }
+            .dances-grid { grid-template-columns: 1fr; }
+            .dance-feature { grid-column: span 1; height: 400px; }
+            .dance-feature .dance-name { font-size: 40px; }
+            .dances-header { flex-direction: column; gap: 30px; padding: 0 30px 60px; }
+            .events-section { padding: 80px 30px; }
+            .events-grid { grid-template-columns: 1fr; }
+            .classes-section { padding: 80px 30px; }
+            .classes-grid { grid-template-columns: 1fr; }
+            .classes-header { flex-direction: column; gap: 20px; }
+            .cta-content { padding: 40px 30px; }
+            footer { padding: 60px 30px 40px; }
+            .footer-top { grid-template-columns: 1fr; gap: 50px; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot" id="dot"></div>
+    <div class="cursor-ring" id="ring"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="logo">Sask Perú</a>
+        <ul class="nav-links">
+            <li><a href="#bailes">Danzas</a></li>
+            <li><a href="#eventos">Eventos</a></li>
+            <li><a href="#clases">Clases</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="https://wa.me/16394806176" target="_blank" class="nav-btn">Contáctame</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <canvas id="particles"></canvas>
+
+        <div class="hero-left">
+            <div class="hero-eyebrow">
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Saskatchewan, Canadá — Folklore desde el corazón</span>
+            </div>
+            <h1>
+                El folklore<br>
+                <em>de Perú</em><br>
+                <strong>vive aquí</strong>
+            </h1>
+            <p class="hero-desc">
+                Soy una apasionada del folklore peruano, y cada danza que interpreto
+                nace desde lo más profundo de mi corazón. Preservando la tradición
+                andina, costeña y amazónica en el corazón de Saskatchewan.
+            </p>
+            <div class="hero-actions">
+                <a href="#bailes" class="btn-gold"><span>Ver las danzas</span></a>
+                <a href="https://www.instagram.com/saskperu2025/" target="_blank" class="btn-text">
+                    @saskperu2025
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-visual">
+                <div class="hero-visual-text">SASK<br>PERÚ</div>
+                <div class="hero-visual-badge"></div>
+            </div>
+            <div class="hero-flag-stripe"></div>
+            <div class="hero-tag">
+                <div class="hero-tag-num">Saskatchewan</div>
+                <div class="hero-tag-label">Canadá · Folklore Peruano</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker">
+        <div class="ticker-track" id="tickerTrack">
+            <span class="ticker-item">TINKUS</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">HUAYLARSH WANKA</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">CAPORALES</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">FESTEJO</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">AMAZONIA PERUANA</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">DANZA CON EL CORAZÓN</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <!-- duplicado para loop -->
+            <span class="ticker-item">TINKUS</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">HUAYLARSH WANKA</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">CAPORALES</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">FESTEJO</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">AMAZONIA PERUANA</span>
+            <span class="ticker-item ticker-sep">✦</span>
+            <span class="ticker-item">DANZA CON EL CORAZÓN</span>
+            <span class="ticker-item ticker-sep">✦</span>
+        </div>
+    </div>
+
+    <!-- ABOUT STRIP -->
+    <section class="about-strip" id="acerca">
+        <div class="about-left reveal">
+            <div class="section-tag">
+                <div class="line-dec"></div>
+                <span>Mi historia</span>
+            </div>
+            <h2>Perú en el<br><em>corazón de Canadá</em></h2>
+            <p>
+                Soy Sask Perú — una apasionada del folklore peruano que encontró en
+                Saskatchewan un nuevo hogar para las danzas que amo. Cada presentación
+                es un viaje desde los Andes hasta la Amazonía, pasando por la costa peruana.
+            </p>
+            <p>
+                Mi misión es mantener viva la tradición de nuestros ancestros y compartirla
+                con la comunidad latina e internacional de Saskatchewan. Porque la cultura
+                no tiene fronteras.
+            </p>
+        </div>
+        <div class="about-right reveal reveal-delay-2">
+            <div class="stat-box">
+                <span class="stat-num">6</span>
+                <span class="stat-label">Danzas del repertorio</span>
+            </div>
+            <div class="stat-box accent">
+                <span class="stat-num">2</span>
+                <span class="stat-label">Festivales anuales</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num">3</span>
+                <span class="stat-label">Regiones del Perú</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num">∞</span>
+                <span class="stat-label">Pasión por la danza</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- DANCES SECTION -->
+    <section class="dances-section" id="bailes">
+        <div class="dances-header">
+            <div>
+                <div class="section-tag reveal">
+                    <div class="line-dec"></div>
+                    <span>Repertorio</span>
+                </div>
+                <h2 class="reveal reveal-delay-1">Seis <em>danzas,</em><br>un solo corazón</h2>
+            </div>
+            <p class="reveal reveal-delay-2">
+                Desde los Andes boliviano-peruanos hasta la selva amazónica y la
+                costa afroperuana — cada baile cuenta una historia única.
+            </p>
+        </div>
+
+        <div class="dances-grid">
+            <!-- Feature: Tinkus -->
+            <div class="dance-card dance-feature reveal">
+                <div class="dance-bg bg-tinkus"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">01</div>
+                <div class="dance-content">
+                    <div class="dance-region">Altiplano · Potosí, Bolivia</div>
+                    <div class="dance-name">Tinkus</div>
+                    <p class="dance-desc">Combate sagrado convertido en danza. Nacido como ritual guerrero del Altiplano — cascos emplumados, ritmo marcial y la energía pura de los Andes.</p>
+                </div>
+            </div>
+
+            <!-- Huaylarsh Wanka -->
+            <div class="dance-card reveal">
+                <div class="dance-bg bg-huaylarsh"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">02</div>
+                <div class="dance-content">
+                    <div class="dance-region">Sierra · Junín, Perú</div>
+                    <div class="dance-name">Huaylarsh Wanka</div>
+                    <p class="dance-desc">El alma del Valle del Mantaro hecha zapateo. Amor, cosecha y orgullo wanka. Patrimonio Cultural de la Nación desde 2005.</p>
+                </div>
+            </div>
+
+            <!-- Caporales -->
+            <div class="dance-card reveal reveal-delay-1">
+                <div class="dance-bg bg-caporales"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">03</div>
+                <div class="dance-content">
+                    <div class="dance-region">Altiplano · La Paz, Bolivia</div>
+                    <div class="dance-name">Caporales</div>
+                    <p class="dance-desc">Saltos acrobáticos, botas con cascabeles y raíces afro-andinas. Ícono del Carnaval de Oruro y la Fiesta del Gran Poder.</p>
+                </div>
+            </div>
+
+            <!-- Festejo -->
+            <div class="dance-card reveal">
+                <div class="dance-bg bg-festejo"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">04</div>
+                <div class="dance-content">
+                    <div class="dance-region">Costa · Lima, Perú</div>
+                    <div class="dance-name">Festejo</div>
+                    <p class="dance-desc">El cajón marca el pulso, las caderas hablan. La expresión más libre del alma afroperuana — orgullo e identidad en cada movimiento.</p>
+                </div>
+            </div>
+
+            <!-- Amazonia -->
+            <div class="dance-card reveal reveal-delay-1">
+                <div class="dance-bg bg-amazonia"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">05</div>
+                <div class="dance-content">
+                    <div class="dance-region">Selva · Amazonía Peruana</div>
+                    <div class="dance-name">Amazonia Peruana</div>
+                    <p class="dance-desc">La selva habla a través del cuerpo. Rituales milenarios, plumas y el rugido del Amazonas. Danza de la Boa, Pandilla y Danza Amazonas.</p>
+                </div>
+            </div>
+
+            <!-- Danza con el Corazón -->
+            <div class="dance-card reveal reveal-delay-2">
+                <div class="dance-bg bg-corazon"></div>
+                <div class="dance-overlay"></div>
+                <div class="dance-number">06</div>
+                <div class="dance-content">
+                    <div class="dance-region">Show Signature · Sask Perú</div>
+                    <div class="dance-name">Danza con el Corazón</div>
+                    <p class="dance-desc">Más que técnica, es emoción. El espectáculo donde el folklore peruano se convierte en pura expresión personal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTS SECTION -->
+    <section class="events-section" id="eventos">
+        <div class="events-header reveal">
+            <div class="section-tag" style="justify-content:center;">
+                <div class="line-dec"></div>
+                <span>Presentaciones</span>
+            </div>
+            <h2>Nos vemos<br><em>en el escenario</em></h2>
+        </div>
+
+        <div class="events-grid">
+            <div class="event-card primary reveal">
+                <div class="event-date">Sábado 29 de Marzo · Anual</div>
+                <div class="event-name">Latin Spring Festival</div>
+                <p class="event-desc">
+                    El evento latino más esperado de Saskatchewan. Sask Perú presenta
+                    9 bailes en vivo: Danzas de la Selva, Festejo y Caporales en un
+                    espectáculo lleno de color y tradición.
+                </p>
+                <div class="event-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    St. Joseph's Parish 535, Saskatoon, SK
+                </div>
+                <div class="event-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    9 bailes en vivo · Entrada general
+                </div>
+            </div>
+
+            <div class="event-card secondary reveal reveal-delay-1">
+                <div class="event-date">Temporada de Invierno · Anual</div>
+                <div class="event-name">Saskatchewan Winter Festival</div>
+                <p class="event-desc">
+                    El folklore peruano en el festival multicultural de invierno de Saskatchewan.
+                    Colores, trajes tradicionales y la calidez del Perú en medio del frío canadiense.
+                </p>
+                <div class="event-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Saskatoon, Saskatchewan
+                </div>
+                <div class="event-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Festival multicultural · Comunidad abierta
+                </div>
+            </div>
+
+            <div class="event-card kids reveal reveal-delay-2" style="grid-column: span 2;">
+                <div class="event-date">Programa continuo · Todo el año</div>
+                <div class="event-name">Mucho Flow Latino — Kids</div>
+                <p class="event-desc">
+                    Los más pequeños también tienen su espacio para conectar con las raíces peruanas.
+                    Clases de danza folclórica adaptadas para niños, llenas de alegría, colores y aprendizaje cultural.
+                    Enseñamos a la próxima generación a llevar el corazón peruano con orgullo en Saskatchewan.
+                </p>
+                <div class="event-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    St. Joseph's Parish 535, Saskatoon, SK · Contactar para horarios
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLASSES SECTION -->
+    <section class="classes-section" id="clases">
+        <div class="classes-header">
+            <div>
+                <div class="section-tag reveal">
+                    <div class="line-dec"></div>
+                    <span>Clases</span>
+                </div>
+                <h2 class="reveal reveal-delay-1">Elige tu<br><em>ritmo</em></h2>
+            </div>
+            <p class="reveal reveal-delay-2" style="max-width:340px; color:rgba(255,255,255,0.5); font-size:16px; line-height:1.7;">
+                Para todos los niveles. Adultos, jóvenes y niños bienvenidos —
+                no se necesita experiencia previa.
+            </p>
+        </div>
+
+        <div class="classes-grid">
+            <div class="class-card reveal">
+                <div class="class-level">Adultos · Todos los niveles</div>
+                <div class="class-name">Folklore Peruano</div>
+                <p class="class-desc">Aprende las danzas del repertorio de Sask Perú: Tinkus, Huaylarsh, Caporales, Festejo y más. Sin experiencia previa necesaria.</p>
+                <div class="class-details">
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        St. Joseph's Parish 535, Saskatoon
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Horarios a consultar
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 10l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Grupos pequeños y personalizados
+                    </div>
+                </div>
+                <a href="https://wa.me/16394806176" target="_blank" class="class-cta">
+                    Consultar
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="class-card featured-class reveal reveal-delay-1">
+                <div class="badge-popular">Kids</div>
+                <div class="class-level">Niños · Mucho Flow Latino</div>
+                <div class="class-name">Danza Infantil</div>
+                <p class="class-desc">Programa especial para niños. Aprenden folklore peruano de forma divertida, desarrollando coordinación, cultura e identidad desde pequeños.</p>
+                <div class="class-details">
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        St. Joseph's Parish 535, Saskatoon
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Sábados · Consultar horario
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 10l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Dinámico, colorido y cultural
+                    </div>
+                </div>
+                <a href="https://wa.me/16394806176" target="_blank" class="class-cta" style="color:rgba(255,255,255,0.9);">
+                    Inscribir a mi hijo/a
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="class-card reveal reveal-delay-2">
+                <div class="class-level">Shows · Eventos privados</div>
+                <div class="class-name">Presentaciones</div>
+                <p class="class-desc">¿Tienes un evento, celebración o festival? Llevamos el folklore peruano a tu espacio — espectáculos personalizados para toda ocasión.</p>
+                <div class="class-details">
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Bodas, quinceañeras, festivales
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2C5.24 2 3 4.24 3 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="8" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        Saskatchewan · A domicilio
+                    </div>
+                    <div class="class-detail">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 10l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Trajes tradicionales incluidos
+                    </div>
+                </div>
+                <a href="https://wa.me/16394806176" target="_blank" class="class-cta">
+                    Cotizar
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-bg-pattern"></div>
+        <div class="cta-content">
+            <div class="section-tag reveal" style="justify-content:center; margin-bottom:24px;">
+                <div class="line-dec"></div>
+                <span>Contacto</span>
+            </div>
+            <h2 class="reveal reveal-delay-1">¿Listo para<br><em>sentir el ritmo?</em></h2>
+            <p class="reveal reveal-delay-2">
+                Escríbeme por WhatsApp o sígueme en Instagram.
+                Estoy en Saskatoon, Saskatchewan — y el folklore peruano
+                te espera con los brazos abiertos.
+            </p>
+            <div class="cta-buttons reveal reveal-delay-3">
+                <a href="https://wa.me/16394806176" target="_blank" class="btn-whatsapp">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    WhatsApp · +1 (639) 480-6176
+                </a>
+                <a href="https://www.instagram.com/saskperu2025/" target="_blank" class="btn-text" style="color:rgba(255,255,255,0.7);">
+                    Instagram @saskperu2025
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="logo-footer">Sask Perú</span>
+                <p>Preservando el folklore peruano en Saskatchewan, Canadá. Cada danza nace desde lo más profundo del corazón.</p>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/saskperu2025/" target="_blank" class="social-btn" title="Instagram">ig</a>
+                    <a href="https://wa.me/16394806176" target="_blank" class="social-btn" title="WhatsApp">wa</a>
+                </div>
+                <div class="footer-sk-badge">
+                    <span>🍁 Saskatoon · Saskatchewan · Canada</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Danzas</h4>
+                <a href="#bailes">Tinkus</a>
+                <a href="#bailes">Huaylarsh Wanka</a>
+                <a href="#bailes">Caporales</a>
+                <a href="#bailes">Festejo</a>
+                <a href="#bailes">Amazonia Peruana</a>
+                <a href="#bailes">Danza con el Corazón</a>
+            </div>
+            <div class="footer-col">
+                <h4>Eventos</h4>
+                <a href="#eventos">Latin Spring Festival</a>
+                <a href="#eventos">SK Winter Festival</a>
+                <a href="#eventos">Mucho Flow Kids</a>
+                <a href="#eventos">Eventos privados</a>
+            </div>
+            <div class="footer-col" id="contacto-col">
+                <h4>Contacto</h4>
+                <a href="https://wa.me/16394806176" target="_blank">+1 (639) 480-6176</a>
+                <a href="https://wa.me/16394806176" target="_blank">WhatsApp</a>
+                <a href="https://www.instagram.com/saskperu2025/" target="_blank">@saskperu2025</a>
+                <a href="#eventos">Ver próximos eventos</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Sask Perú — Todos los derechos reservados</span>
+            <div style="display:flex; gap:30px;">
+                <a href="https://www.instagram.com/saskperu2025/" target="_blank">Instagram</a>
+                <a href="https://wa.me/16394806176" target="_blank">WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        'use strict';
+
+        // ===== PREFERS REDUCED MOTION =====
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ===== CUSTOM CURSOR (desktop only) =====
+        const dot  = document.getElementById('dot');
+        const ring = document.getElementById('ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        let rafId;
+
+        if (window.matchMedia('(pointer: fine)').matches && !prefersReduced) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+            }, { passive: true });
+
+            document.querySelectorAll('a, button, .dance-card, .class-card, .event-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    ring.style.width = '64px'; ring.style.height = '64px';
+                    ring.style.borderColor = 'rgba(216,27,107,0.9)';
+                    dot.style.scale = '2';
+                }, { passive: true });
+                el.addEventListener('mouseleave', () => {
+                    ring.style.width = '40px'; ring.style.height = '40px';
+                    ring.style.borderColor = 'rgba(216,27,107,0.6)';
+                    dot.style.scale = '1';
+                }, { passive: true });
+            });
+
+            function animateRing() {
+                ringX += (mouseX - ringX) * 0.12;
+                ringY += (mouseY - ringY) * 0.12;
+                ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
+                rafId = requestAnimationFrame(animateRing);
+            }
+            animateRing();
+        } else {
+            dot.style.display = 'none';
+            ring.style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
+
+        // ===== SCROLL HANDLER (debounced, single listener) =====
+        const navbar      = document.getElementById('navbar');
+        const progressBar = document.getElementById('progressBar');
+        const heroVisual  = document.querySelector('.hero-visual');
+
+        let ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const sy = window.scrollY;
+                    navbar.classList.toggle('scrolled', sy > 60);
+                    const pct = (sy / (document.body.scrollHeight - window.innerHeight)) * 100;
+                    progressBar.style.width = Math.min(pct, 100) + '%';
+                    if (heroVisual && !prefersReduced) {
+                        heroVisual.style.transform = `translateY(${sy * 0.08}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // ===== SCROLL REVEAL =====
+        if (!prefersReduced) {
+            const revealObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        }
+
+        // ===== CANVAS PARTICLES (reduced count, tab visibility aware) =====
+        const canvas = document.getElementById('particles');
+        if (canvas && !prefersReduced) {
+            const ctx = canvas.getContext('2d', { alpha: true });
+            const PARTICLE_COUNT = 35; // was 80
+            const COLORS = ['rgba(216,27,107,', 'rgba(196,18,48,', 'rgba(255,255,255,'];
+            let paused = false;
+
+            function resizeCanvas() {
+                canvas.width  = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+            resizeCanvas();
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(resizeCanvas, 150);
+            }, { passive: true });
+
+            document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+
+            class Particle {
+                constructor() { this.reset(true); }
+                reset(init = false) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = init ? Math.random() * canvas.height : canvas.height + 5;
+                    this.size   = Math.random() * 1.5 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.25;
+                    this.speedY = -(Math.random() * 0.4 + 0.15);
+                    this.life   = Math.random() * 180 + 80;
+                    this.age    = init ? Math.random() * this.life : 0;
+                    this.color  = COLORS[Math.floor(Math.random() * COLORS.length)];
+                }
+                update() { this.x += this.speedX; this.y += this.speedY; this.age++; if (this.age > this.life) this.reset(); }
+                draw() {
+                    const r = this.age / this.life;
+                    const a = (r < 0.15 ? r / 0.15 : r > 0.75 ? (1 - r) / 0.25 : 1) * 0.55;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, 6.283);
+                    ctx.fillStyle = this.color + a + ')';
+                    ctx.fill();
+                }
+            }
+
+            const particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+
+            function animateParticles() {
+                if (!paused) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+
+        // ===== COUNTER ANIMATION =====
+        const statObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.querySelectorAll('.stat-num').forEach(el => {
+                    const raw = el.textContent.trim();
+                    if (prefersReduced || isNaN(parseInt(raw))) return;
+                    const target = parseInt(raw.replace(/\D/g, ''));
+                    const suffix = raw.replace(/[0-9]/g, '');
+                    const dur = 1400, step = 16;
+                    const inc = target / (dur / step);
+                    let cur = 0;
+                    const t = setInterval(() => {
+                        cur = Math.min(cur + inc, target);
+                        el.textContent = Math.floor(cur) + suffix;
+                        if (cur >= target) clearInterval(t);
+                    }, step);
+                });
+                statObs.unobserve(entry.target);
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('.about-right').forEach(el => statObs.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perú en Movimiento | Descubre la Magia de los Bailes Peruanos en Canadá</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --peru-red: #D91023;
+            --peru-gold: #FFD700;
+            --deep-purple: #4A148C;
+            --warm-orange: #FF6B35;
+            --cream: #FFF8E7;
+            --dark: #1A1A2E;
+            --text-muted: #6B7280;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--dark);
+            background: var(--cream);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 0 64px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--peru-red), var(--warm-orange));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: white;
+        }
+
+        .nav-logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--deep-purple), var(--peru-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--peru-red);
+        }
+
+        .nav-cta {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--peru-red), var(--warm-orange));
+            color: white;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(217, 16, 35, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 900px;
+            background: linear-gradient(135deg, var(--deep-purple) 0%, #6B2D8E 50%, var(--peru-red) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 64px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-eyebrow .flag {
+            font-size: 20px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 28px;
+            max-width: 900px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--peru-gold);
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .hero-sub {
+            font-size: 21px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            max-width: 620px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-primary {
+            padding: 18px 36px;
+            background: white;
+            color: var(--deep-purple);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+
+        .btn-ghost {
+            padding: 18px 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        /* Trust Strip */
+        .trust-strip {
+            background: var(--dark);
+            color: white;
+            padding: 28px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 64px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .trust-icon {
+            font-size: 24px;
+        }
+
+        /* Dances Section */
+        .dances {
+            padding: 120px 64px;
+            background: var(--cream);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+
+        .section-eyebrow {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--peru-red);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--deep-purple), var(--peru-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-sub {
+            font-size: 19px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .dances-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .dance-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dance-image {
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+        }
+
+        .dance-image.marineras {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .dance-image.huayno {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .dance-image.lando {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .dance-image.sikuri {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .dance-image.tondero {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .dance-image.diablada {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .dance-content {
+            padding: 32px 28px;
+        }
+
+        .dance-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .dance-badge.norte { background: #E3F2FD; color: #1565C0; }
+        .dance-badge.sierra { background: #E8F5E9; color: #2E7D32; }
+        .dance-badge.costa { background: #FFF3E0; color: #E65100; }
+
+        .dance-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .dance-desc {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .dance-origin {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--peru-red);
+            font-weight: 600;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 120px 64px;
+            background: white;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .event-date {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--peru-red);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 140px 64px;
+            background: linear-gradient(135deg, var(--peru-red) 0%, var(--deep-purple) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            padding: 20px 48px;
+            background: white;
+            color: var(--peru-red);
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 64px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 64px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+            <div class="nav-logo-icon">🇵🇪</div>
+            <div class="nav-logo-text">Perú en Movimiento</div>
+        </div>
+        <div class="nav-links">
+            <a href="#bailes">Bailes</a>
+            <a href="#eventos">Eventos</a>
+            <a href="#acerca">Acerca</a>
+        </div>
+        <a href="#clases" class="nav-cta">Reserva tu clase →</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-eyebrow">
+            <span class="flag">🇨🇦</span>
+            Desde Canadá hasta el corazón del Perú
+        </div>
+        <h1>Descubre la <em>magia</em> de los bailes peruanos</h1>
+        <p class="hero-sub">
+            Conecta con la riqueza cultural del Perú a través de sus danzas tradicionales. 
+            Clases presenciales en Toronto, Vancouver y Montreal.
+        </p>
+        <div class="hero-actions">
+            <a href="#clases" class="btn-primary">🎭 Comenzar a bailar</a>
+            <a href="#bailes" class="btn-ghost">Ver todos los bailes</a>
+        </div>
+    </section>
+
+    <div class="trust-strip">
+        <div class="trust-item">
+            <span class="trust-icon">🏆</span>
+            Maestros certificados del Ministerio de Cultura
+        </div>
+        <div class="trust-item">
+            <span class="trust-icon">📍</span>
+            3 ciudades en Canadá
+        </div>
+        <div class="trust-item">
+            <span class="trust-icon">👥</span>
+            +500 estudiantes activos
+        </div>
+        <div class="trust-item">
+            <span class="trust-icon">🎵</span>
+            Música en vivo en cada clase
+        </div>
+    </div>
+
+    <section class="dances" id="bailes">
+        <div class="section-header">
+            <div class="section-eyebrow">Nuestras Danzas</div>
+            <h2 class="section-title">6 Bailes que Enamoran</h2>
+            <p class="section-sub">
+                Cada región del Perú tiene su ritmo. Desde la costa hasta la selva, 
+                descubre la diversidad de nuestras tradiciones.
+            </p>
+        </div>
+
+        <div class="dances-grid">
+            <div class="dance-card">
+                <div class="dance-image marineras">💃</div>
+                <div class="dance-content">
+                    <span class="dance-badge costa">Costa</span>
+                    <h3 class="dance-title">Marinera</h3>
+                    <p class="dance-desc">El baile de coqueteo más elegante del Perú. Movimientos suaves, pañuelos y mucha pasión.</p>
+                    <div class="dance-origin">📍 La Libertad, Trujillo</div>
+                </div>
+            </div>
+
+            <div class="dance-card">
+                <div class="dance-image huayno">🎵</div>
+                <div class="dance-content">
+                    <span class="dance-badge sierra">Sierra</span>
+                    <h3 class="dance-title">Huayno</h3>
+                    <p class="dance-desc">El ritmo del corazón andino. Vibrante, alegre y lleno de historia milenaria.</p>
+                    <div class="dance-origin">📍 Cusco, Ayacucho</div>
+                </div>
+            </div>
+
+            <div class="dance-card">
+                <div class="dance-image lando">🥁</div>
+                <div class="dance-content">
+                    <span class="dance-badge costa">Costa</span>
+                    <h3 class="dance-title">Lando</h3>
+                    <p class="dance-desc">Ritmo afroperuano con cajón y zapateo. Fuerza, resistencia y alegría.</p>
+                    <div class="dance-origin">📍 Lima, Cañete</div>
+                </div>
+            </div>
+
+            <div class="dance-card">
+                <div class="dance-image sikuri">🎺</div>
+                <div class="dance-content">
+                    <span class="dance-badge sierra">Sierra</span>
+                    <h3 class="dance-title">Sikuri</h3>
+                    <p class="dance-desc">Danza comunitaria con zampoñas. Coordenación perfecta entre docenas de bailarines.</p>
+                    <div class="dance-origin">📍 Puno, Altiplano</div>
+                </div>
+            </div>
+
+            <div class="dance-card">
+                <div class="dance-image tondero">🌊</div>
+                <div class="dance-content">
+                    <span class="dance-badge norte">Norte</span>
+                    <h3 class="dance-title">Tondero</h3>
+                    <p class="dance-desc">Alegría costeña del norte peruano. Zapateo rápido y mucha celebración.</p>
+                    <div class="dance-origin">📍 Piura, Chiclayo</div>
+                </div>
+            </div>
+
+            <div class="dance-card">
+                <div class="dance-image diablada">👺</div>
+                <div class="dance-content">
+                    <span class="dance-badge sierra">Sierra</span>
+                    <h3 class="dance-title">Diablada Puneña</h3>
+                    <p class="dance-desc">Colorida danza de máscaras que mezcla lo andino con lo europeo.</p>
+                    <div class="dance-origin">📍 Puno, Fiesta de la Candelaria</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="events" id="eventos">
+        <div class="section-header">
+            <div class="section-eyebrow">Próximos Eventos</div>
+            <h2 class="section-title">Vive el Perú en Canadá</h2>
+        </div>
+
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-date">📅 15 de Julio, 2025</div>
+                <h3 class="event-title">Festival de Marinera Toronto</h3>
+                <div class="event-meta">
+                    <span>📍 Harbourfront Centre</span>
+                    <span>🎭 Concurso + Shows</span>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">📅 28 de Julio, 2025</div>
+                <h3 class="event-title">Fiestas Patrias Vancouver</h3>
+                <div class="event-meta">
+                    <span>📍 David Lam Park</span>
+                    <span>🇵🇪 Día de la Independencia</span>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">📅 12 de Agosto, 2025</div>
+                <h3 class="event-title">Taller Intensivo de Huayno</h3>
+                <div class="event-meta">
+                    <span>📍 Montreal Cultural Centre</span>
+                    <span>👥 20 cupos disponibles</span>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">📅 Primero de cada mes</div>
+                <h3 class="event-title">Noche de Lando y Cajón</h3>
+                <div class="event-meta">
+                    <span>📍 Toronto, Vancouver, Montreal</span>
+                    <span>🥁 Clase + Jam Session</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="clases">
+        <div class="cta-content">
+            <h2>¿Listo para bailar?</h2>
+            <p>Únete a nuestra comunidad y descubre la alegría de los bailes peruanos. 
+               Primera clase de prueba gratuita.</p>
+            <a href="#" class="cta-btn">Reservar mi clase gratis →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🇵🇪 Perú en Movimiento</h3>
+                <p>Promoviendo la cultura peruana en Canadá a través de la danza, la música y la comunidad.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Clases</h4>
+                    <a href="#">Marinera</a>
+                    <a href="#">Huayno</a>
+                    <a href="#">Lando</a>
+                    <a href="#">Todos los bailes</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Ciudades</h4>
+                    <a href="#">Toronto</a>
+                    <a href="#">Vancouver</a>
+                    <a href="#">Montreal</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <a href="#">info@peruenmovimiento.ca</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
