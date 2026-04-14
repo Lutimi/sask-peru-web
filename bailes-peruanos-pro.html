@@ -203,10 +203,9 @@
         .hero-right { position: relative; overflow: hidden; }
         .hero-visual {
             width: 100%; height: 100%;
-            background: linear-gradient(135deg,
-                #8B0D22 0%, #C41230 25%,
-                #D4A843 55%, #E85D04 75%,
-                #2D6A4F 100%);
+            background-image: url(hero_marinera.png);
+            background-size: cover;
+            background-position: center 15%;
             display: flex; align-items: center; justify-content: center;
             position: relative;
         }
@@ -214,20 +213,34 @@
             content: '';
             position: absolute; inset: 0;
             background:
-                radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.3) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 20%, rgba(196,18,48,0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(45,106,79,0.4) 0%, transparent 50%);
+                radial-gradient(ellipse at 30% 50%, rgba(216,27,107,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(196,18,48,0.25) 0%, transparent 50%),
+                linear-gradient(to top, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.05) 70%);
         }
         .hero-visual-text {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(80px, 12vw, 180px);
             font-weight: 700;
-            color: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.04);
             letter-spacing: -5px;
             line-height: 0.85;
             text-align: center;
             position: relative; z-index: 1;
             user-select: none;
+        }
+        .hero-logo-pill {
+            position: absolute; z-index: 3;
+            top: 40px; right: 40px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .hero-logo-pill img {
+            display: block;
+            width: 130px;
+            height: auto;
         }
         .hero-visual-badge {
             position: absolute; bottom: 0; left: 0; right: 0;
@@ -397,33 +410,49 @@
         }
         .dance-feature .dance-name { font-size: 64px; }
 
-        /* Gradient backgrounds per dance */
+        .dance-finale {
+            grid-column: 1 / -1; aspect-ratio: auto; height: 420px;
+        }
+        .dance-finale .dance-name { font-size: 64px; }
+        .dance-finale .bg-corazon { background-position: center 35%; }
+
+        /* Photo backgrounds per dance */
         .bg-tinkus {
-            background: linear-gradient(135deg, #3D0A0A 0%, #8B1A1A 40%, #C41230 70%, #E85D04 100%);
+            background-image: url(diablada_puno.png);
+            background-size: cover;
+            background-position: center 30%;
         }
         .bg-huaylarsh {
-            background: linear-gradient(135deg, #3D2B00 0%, #8B6914 40%, #D4A843 70%, #7B9E3E 100%);
+            background-image: url(huayno_cusco.png);
+            background-size: cover;
+            background-position: center 25%;
         }
         .bg-caporales {
-            background: linear-gradient(135deg, #050505 0%, #1A1A1A 40%, #4A0A0A 70%, #8B0D22 100%);
+            background-image: url(caporales_altiplano.png);
+            background-size: cover;
+            background-position: center;
         }
         .bg-festejo {
-            background: linear-gradient(135deg, #4A1500 0%, #8B3300 40%, #E8741A 70%, #D4A843 100%);
+            background-image: url(lando_afroperuano.png);
+            background-size: cover;
+            background-position: center;
         }
         .bg-amazonia {
-            background: linear-gradient(135deg, #001A0A 0%, #0D3B1E 40%, #1B5E20 70%, #2D6A4F 100%);
+            background-image: url(amazonia_peruana.png);
+            background-size: cover;
+            background-position: center;
         }
         .bg-corazon {
-            background: linear-gradient(135deg, #C41230 0%, #E85D04 20%, #D4A843 40%, #7B9E3E 60%, #2D6A4F 80%, #4A90D9 100%);
+            background-image: url(tondero_piura.png);
+            background-size: cover;
+            background-position: center 20%;
         }
 
-        /* Geometric decorative overlay for dance cards */
+        /* Subtle vignette over real photos */
         .dance-bg::after {
             content: '';
             position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.15) 0%, transparent 70%);
         }
 
         /* ===== EVENTS SECTION ===== */
@@ -774,6 +803,9 @@
             <div class="hero-visual">
                 <div class="hero-visual-text">SASK<br>PERÚ</div>
                 <div class="hero-visual-badge"></div>
+                <div class="hero-logo-pill">
+                    <img src="brandingideas/IMG_0024.JPG.jpeg" alt="Sask Perú Dance Academy">
+                </div>
             </div>
             <div class="hero-flag-stripe"></div>
             <div class="hero-tag">
@@ -931,7 +963,7 @@
             </div>
 
             <!-- Danza con el Corazón -->
-            <div class="dance-card reveal reveal-delay-2">
+            <div class="dance-card dance-finale reveal reveal-delay-2">
                 <div class="dance-bg bg-corazon"></div>
                 <div class="dance-overlay"></div>
                 <div class="dance-number">06</div>
